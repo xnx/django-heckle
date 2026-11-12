@@ -1,0 +1,6 @@
+{% load heckle_tags %}<li class="heckle-comment" id="comment-{{ comment.pk }}">
+  <div class="heckle-meta">{{ comment|heckle_avatar }}<span class="heckle-name">{{ comment.name }}</span>{% if comment.by_staff %}<span class="heckle-badge">Author</span>{% endif %}<a class="heckle-date" href="#comment-{{ comment.pk }}"><time datetime="{{ comment.created|date:'c' }}">{{ comment.created|date:"j F Y" }}</time></a></div>
+  <div class="heckle-body">{{ comment.body_html|safe }}</div>
+  {% if open and comment.can_reply %}<a class="heckle-reply" href="?reply={{ comment.pk }}#heckle-form">Reply</a>{% endif %}
+  {% if comment.thread %}<ol class="heckle-list heckle-replies">{% for comment in comment.thread %}{% include "heckle/_comment.html" %}{% endfor %}</ol>{% endif %}
+</li>

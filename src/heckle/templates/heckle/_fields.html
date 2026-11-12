@@ -1,0 +1,14 @@
+{% for error in form.non_field_errors %}<p class="heckle-error" role="alert">{{ error }}</p>{% endfor %}
+{{ form.target }}{{ form.parent }}{{ form.issued }}
+<div class="heckle-honeypot" aria-hidden="true"><label for="{{ form.website.id_for_label }}">{{ form.website.label }}</label>{{ form.website }}</div>
+{% for field in form.visible_fields %}{% if field.name != "website" %}
+<p class="heckle-field">
+  <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="heckle-muted" aria-hidden="true">*</span>{% endif %}</label>
+  {{ field }}
+  {% if field.help_text %}<span class="heckle-help">{{ field.help_text }}</span>{% endif %}
+  {% for error in field.errors %}<span class="heckle-error" role="alert">{{ error }}</span>{% endfor %}
+</p>
+{% endif %}{% endfor %}
+{% if turnstile_site_key %}<div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}"></div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{% endif %}
+<p class="heckle-help">Comments are written in Markdown (code between ``` lines) and appear once approved. {% include "heckle/_privacy.html" %}</p>
+<button type="submit" class="heckle-button">Post comment</button>

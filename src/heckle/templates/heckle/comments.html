@@ -1,0 +1,8 @@
+{% load static %}<link rel="stylesheet" href="{% static 'heckle/heckle.css' %}">
+<section class="heckle" id="comments" aria-labelledby="heckle-heading">
+  <h2 id="heckle-heading">{% if count %}{{ count }} comment{{ count|pluralize }}{% else %}Comments{% endif %}</h2>
+  {% if posted == "pending" %}<p class="heckle-notice" role="status">Thank you: your comment will appear once it has been approved.</p>
+  {% elif posted == "approved" %}<p class="heckle-notice" role="status">Your comment has been posted.</p>{% endif %}
+  {% if comments %}<ol class="heckle-list">{% for comment in comments %}{% include "heckle/_comment.html" %}{% endfor %}</ol>{% endif %}
+  {% if open %}{% include "heckle/_form.html" %}{% else %}<p class="heckle-muted">Comments are closed.</p>{% endif %}
+</section>

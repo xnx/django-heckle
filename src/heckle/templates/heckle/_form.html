@@ -1,0 +1,5 @@
+<form class="heckle-form" id="heckle-form" method="post" action="{{ action }}" novalidate>
+  {% csrf_token %}
+  <h3>{% if reply_to %}Reply to {{ reply_to.name }} <a class="heckle-muted" href="{{ path }}#heckle-form">(cancel)</a>{% else %}Leave a comment{% endif %}</h3>
+  {% include "heckle/_fields.html" %}
+</form>

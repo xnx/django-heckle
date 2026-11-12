@@ -1,0 +1,9 @@
+{% autoescape off %}{{ comment.name }}{% if comment.email %} <{{ comment.email }}>{% endif %} has commented on "{{ comment.target }}"{% if comment.parent %}, replying to {{ comment.parent.name }}{% endif %}:
+
+{{ comment.body }}
+
+The page: {{ target_url }}
+
+Approve it, reject it or mark it as spam (this link works for {{ days }} days):
+{{ moderate_url }}
+{% endautoescape %}

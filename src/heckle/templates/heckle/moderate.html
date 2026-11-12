@@ -1,0 +1,21 @@
+{% extends "heckle/page.html" %}{% load static %}
+{% block heckle_title %}Moderate a comment{% endblock %}
+{% block heckle_content %}
+<link rel="stylesheet" href="{% static 'heckle/heckle.css' %}">
+<div class="heckle">
+  <h1>Moderate a comment</h1>
+  {% if expired %}
+  <p>This link has expired or is not valid. Comments can also be moderated in the admin.</p>
+  {% else %}
+  {% if done %}<p class="heckle-notice" role="status">The comment is now: {{ done }}.</p>{% endif %}
+  <p class="heckle-muted">By {{ comment.name }}{% if comment.email %} ({{ comment.email }}){% endif %}, {{ comment.created|date:"j F Y, H:i" }}, on {% if target_url %}<a href="{{ target_url }}">{{ comment.target }}</a>{% else %}{{ comment.target }}{% endif %}{% if comment.parent %}, replying to {{ comment.parent.name }}{% endif %}. Now: {{ comment.get_status_display }}.</p>
+  <div class="heckle-comment"><div class="heckle-body">{{ comment.body_html|safe }}</div></div>
+  <form method="post" class="heckle-actions">
+    {% csrf_token %}
+    <button type="submit" name="action" value="approve" class="heckle-button">Approve</button>
+    <button type="submit" name="action" value="reject" class="heckle-button heckle-button-plain">Reject</button>
+    <button type="submit" name="action" value="spam" class="heckle-button heckle-button-plain">Spam</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}
